@@ -1,0 +1,145 @@
+basePath: /
+definitions:
+  DAO.Response:
+    properties:
+      error:
+        type: string
+      status:
+        type: string
+    type: object
+  DAO.SignInRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  DAO.SignUpRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  DAO.Tokens:
+    properties:
+      accessToken:
+        type: string
+      accessTokenTTL:
+        type: integer
+      refreshToken:
+        type: string
+      refreshTokenTTL:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server todo server. You can visit the GitHub repository
+    at https://github.com/LordGhostX/swag-gin-demo
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: Go + Gin Todo API
+  version: "1.0"
+paths:
+  /id-signin/{id}:
+    get:
+      consumes:
+      - application/json
+      description: user sign in
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/DAO.Tokens'
+      summary: User IdSignIn
+      tags:
+      - users-auth
+  /refresh:
+    get:
+      consumes:
+      - application/json
+      description: user refresh
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/DAO.Tokens'
+      summary: User Refresh
+      tags:
+      - users-auth
+  /signin:
+    get:
+      consumes:
+      - application/json
+      description: user sign in
+      parameters:
+      - description: sign up info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/DAO.SignInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/DAO.Tokens'
+      summary: User SignIn
+      tags:
+      - users-auth
+  /signout:
+    post:
+      consumes:
+      - application/json
+      description: user sign out
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/DAO.Response'
+      summary: User SignOut
+      tags:
+      - users-auth
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: create user account
+      parameters:
+      - description: sign up info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/DAO.SignUpRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: User SignUp
+      tags:
+      - users-auth
+securityDefinitions:
+  UsersAuth:
+    in: cookie
+    name: access_token
+    type: apiKey
+swagger: "2.0"

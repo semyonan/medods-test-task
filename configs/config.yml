@@ -1,0 +1,8 @@
+db:
+  url: mongodb://username:password@db:27017/db?authSource=admin
+  name: db
+
+auth:
+  accessTokenTTL: 2h
+  refreshTokenTTL: 720h 
+  secret: secret
